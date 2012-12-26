@@ -1,8 +1,10 @@
 import location
 import gobject
 from time import gmtime, strftime
-
-f = open('/home/user/MyDocs/updated/gps_2012-07-29_a.log','a')
+# Lets generate filename
+filename = strftime("%Y%m%d%H%M%S", gmtime()) + "_gps.log"
+print "Saving log to \'" + filename + "\' in current directory."
+f = open(filename,'a')
 def on_error(control, error, data):
     print "location error: %d... quitting" % error
     #f.write("location error: %d... quitting" % error)
