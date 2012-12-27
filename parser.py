@@ -36,7 +36,7 @@ def readDataFromFile(filepath):
     return data
   except IOError:
     print("Reading the file '" + filepath + "' failed")
-    return "failed"
+    return None
 
 def parseDataToListOfTuples(rawData):
   """
@@ -79,17 +79,31 @@ def handleParsedDataToUsableData(parsedData):
      epc: Climb accuracy
   """
   usableData = []
-  for point in gpsDataAsString:
+  for point in parsedData:
     usableData.append((num(point[0]),num(point[1]),num(point[2]),num(point[3]),num(point[4]),num(point[5]),num(point[6]),num(point[7]),num(point[8]),num(point[9]),num(point[10]),num(point[11]),num(point[12]),num(point[13]),num(point[14])))
   return usableData;
+
+def parseGpsData(filepath):
+  """
+    Capsules all of the parsing behind this function.
+  """
+  data = readDataFromFile(filepath)
+  if data is None:
+    print("Give proper file.")
+    return None
+  return handleParsedDataToUsableData(parseDataToListOfTuples(data))
 
 #TODO: "main" function and "help" to print somekind of usage info
 for o in extraparams: # this is actually smart as we can give many files to this script
   print("Parsing the file " + o)
-  data = readDataFromFile(o)
-  gpsDataAsString = parseDataToListOfTuples(data)
+  gpsData = parseGpsData(o)
+  if gpsData is None:
+    print("File \"" + o + "\" failed to be parsed. Skipping.")
+    continue
+  ##data = readDataFromFile(o)
+  ##gpsDataAsString = parseDataToListOfTuples(data)
   # We have now the original data as tuples where data is in string, lets change the data to values where possible
   # tuples are immutable so lets create a new set of tuples
-  gpsData = handleParsedDataToUsableData(gpsDataAsString)
+  ##gpsData = handleParsedDataToUsableData(gpsDataAsString)
   # TODO: do something with the data that was read in, like change it into the kml format
   #       and write to file by appending ".kml" to the original filepath.
