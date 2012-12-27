@@ -24,7 +24,6 @@ def num (s):
                                 # still throws ValueError because we have "nan" in data
   except ValueError:
     return s
-# Lets read the data from file back to it's original form for easier use
 
 def readDataFromFile(filepath):
   """
@@ -84,11 +83,12 @@ def handleParsedDataToUsableData(parsedData):
     usableData.append((num(point[0]),num(point[1]),num(point[2]),num(point[3]),num(point[4]),num(point[5]),num(point[6]),num(point[7]),num(point[8]),num(point[9]),num(point[10]),num(point[11]),num(point[12]),num(point[13]),num(point[14])))
   return usableData;
 
+#TODO: "main" function and "help" to print somekind of usage info
 for o in extraparams: # this is actually smart as we can give many files to this script
-  print("Opening " + o)
+  print("Parsing the file " + o)
   data = readDataFromFile(o)
   gpsDataAsString = parseDataToListOfTuples(data)
-  # We have now the original data as tuples where data is in string, lets change that
+  # We have now the original data as tuples where data is in string, lets change the data to values where possible
   # tuples are immutable so lets create a new set of tuples
   gpsData = handleParsedDataToUsableData(gpsDataAsString)
   # TODO: do something with the data that was read in, like change it into the kml format
