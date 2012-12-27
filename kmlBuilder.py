@@ -23,7 +23,7 @@ class KMLBuilder():
     this.tempfile.write(kmlPlaceLineStringIn + kmlCoordIn)
     this.tempfile.write(str(fromCoord[0]) + "," + str(fromCoord[1]) + "," + str(fromCoord[2]) + "\n")
     this.tempfile.write(str(toCoord[0])   + "," + str(toCoord[1])   + "," + str(toCoord[2])   + "\n")
-    this.tempfile.write(kmlLineStringClose + kmlPlaceClose)
+    this.tempfile.write(kmlCoordClose + kmlLineStringClose + kmlPlaceClose)
     this.tempfile.flush()
 
   def finalize(this, filename):
@@ -32,6 +32,7 @@ class KMLBuilder():
     this.tempfile.close()
     shutil.copyfile(".tempfile", str(filename) + ".kml")
     os.remove(".tempfile")
+
 
 
 asd = KMLBuilder()

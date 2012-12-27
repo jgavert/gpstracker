@@ -21,16 +21,19 @@ def genColors(minSpeed, maxSpeed, steps):
     alpha = hex(255).split('x')[1]
     blue = "0"
     green = "0"
-    red = "0"
-    if colorStep*x < 16:
-      blue += hex(colorStep*x).split('x')[1]
-      green += hex(colorStep*x).split('x')[1]
-      red += hex(colorStep*x).split('x')[1]
+    red = "f"
+    if 255-colorStep*x < 16:
+      #blue += hex(colorStep*x).split('x')[1]
+      #green += hex(colorStep*x).split('x')[1]
+      red += hex(255-colorStep*x).split('x')[1]
     else:
-      blue = hex(colorStep*x).split('x')[1]
-      green = hex(colorStep*x).split('x')[1]
-      red = hex(colorStep*x).split('x')[1]
-    colors.append((minSpeed + step*x, alpha+blue+green+red))
+      #blue = hex(colorStep*x).split('x')[1]
+      #green = hex(colorStep*x).split('x')[1]
+      red = hex(255-colorStep*x).split('x')[1]
+    blue = "00"
+    green = "00"
+    red = "ee"
+    colors.append((minSpeed + step*x, alpha+red+green+blue))
 
 def main():
   try:
@@ -73,6 +76,33 @@ def main():
     genColors(int(minSpeed), int(maxSpeed), 20)
     for color in colors:
       kmlfile.addLineStyle("ID" + str(color[0]), color[1], 4)
+
+    cid = 0
+    toCoord = None
+    fromCoord = None
+    for point in gpsData:
+      if point[0] == 3:
+        if fromCoord is None:
+          fromCoord = (point[5],point[4],point[7])
+          toCoord = fromCoord
+        else:
+          toCoord = (point[5],point[4],point[7])
+        chosen = -1
+        if point[11] != "nan":
+          for color in colors:
+            if max(int(point[11]), int(color[0])) == int(point[11]):
+              chosen +=1
+            else:
+              break
+        else:
+          chosen = 0
+
+        kmlfile.addPlacemark(cid, "speed = " + str(point[11]) + "km/h", "ID" + str(colors[chosen][0]), fromCoord, toCoord)
+        fromCoord = toCoord
+    kmlfile.finalize(o)
+
+
+
     #print(str(colors))
         #print(str(point[5]) + "," + str(point[4]) + "," + str(point[7]))
       #(latitude, longitude, ellipsoidal height)

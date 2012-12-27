@@ -40,7 +40,7 @@ kmlPlaceDescIn = """        <description>"""
 kmlPlaceDescClose = """</description>
 """
 kmlPlaceStyleIdIn = """        <styleUrl>#"""
-kmlPlaceStyleIdclose = """</styleUrl>
+kmlPlaceStyleIdClose = """</styleUrl>
 """
 kmlPlaceLineStringIn = """        <LineString>
           <extrude>1</extrude>
