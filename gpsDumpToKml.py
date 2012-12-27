@@ -2,6 +2,7 @@
 import sys
 import getopt
 from gpsLogParser import GpsLogParser as parser
+import kmlBuilder
 
 
 def usage():
@@ -31,13 +32,16 @@ def main():
       assert False, "unhandled option"
   #print(args)
 
-  gpsData = []
   for o in args: # this is actually smart as we can give many files to this script or none
     if verbose: print("Parsing the file " + o)
     gpsData = parser.parseGpsData(o)
     if gpsData is None:
       print("File \"" + o + "\" failed to be parsed. Skipping.")
       continue
+    for point in gpsData:
+      if (point[0] == 3):
+        print(str(point[5]) + "," + str(point[4]) + "," + str(point[7]))
+      #(latitude, longitude, ellipsoidal height)
   ##data = readDataFromFile(o)
   ##gpsDataAsString = parseDataToListOfTuples(data)
   # We have now the original data as tuples where data is in string, lets change the data to values where possible
