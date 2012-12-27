@@ -2,7 +2,7 @@
 import sys
 import getopt
 from gpsLogParser import GpsLogParser as parser
-import kmlBuilder
+from kmlBuilder import KMLBuilder
 
 
 def usage():
@@ -12,6 +12,25 @@ def usage():
   print("  --help          Shows this help and exit")
   print("  -v              Verbose")
 
+colors = []
+def genColors(minSpeed, maxSpeed, steps):
+  # aabbggrr
+  step = (maxSpeed - minSpeed) / steps;
+  colorStep = int(255/steps)
+  for x in range(0,steps):
+    alpha = hex(255).split('x')[1]
+    blue = "0"
+    green = "0"
+    red = "0"
+    if colorStep*x < 16:
+      blue += hex(colorStep*x).split('x')[1]
+      green += hex(colorStep*x).split('x')[1]
+      red += hex(colorStep*x).split('x')[1]
+    else:
+      blue = hex(colorStep*x).split('x')[1]
+      green = hex(colorStep*x).split('x')[1]
+      red = hex(colorStep*x).split('x')[1]
+    colors.append((minSpeed + step*x, alpha+blue+green+red))
 
 def main():
   try:
@@ -38,9 +57,24 @@ def main():
     if gpsData is None:
       print("File \"" + o + "\" failed to be parsed. Skipping.")
       continue
+    #We got data so lets build kml file
+    kmlfile = KMLBuilder()
+    kmlfile.newKmlFile()
+
+    #Analyze speed for colouring
+    maxSpeed = -1
+    minSpeed = 100000
     for point in gpsData:
       if (point[0] == 3):
-        print(str(point[5]) + "," + str(point[4]) + "," + str(point[7]))
+        if point[11] != "nan":
+          minSpeed = min(point[11], minSpeed)
+          maxSpeed = max(point[11], maxSpeed)
+
+    genColors(int(minSpeed), int(maxSpeed), 20)
+    for color in colors:
+      kmlfile.addLineStyle("ID" + str(color[0]), color[1], 4)
+    #print(str(colors))
+        #print(str(point[5]) + "," + str(point[4]) + "," + str(point[7]))
       #(latitude, longitude, ellipsoidal height)
   ##data = readDataFromFile(o)
   ##gpsDataAsString = parseDataToListOfTuples(data)
