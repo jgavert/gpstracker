@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import sys
 import re
-import ast
+#import ast
 # Regex to match only the original dataformat, yes it's silly and
 # no I don't want to do it any other way because reasons
 # This ensures that we match data and get tuple with exactly 15 slots.
