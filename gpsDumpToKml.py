@@ -33,6 +33,7 @@ def genColors(minSpeed, maxSpeed, steps):
     blue = "00"
     green = "00"
     red = "ee"
+    # according to google earth, hex ffee0000 is blue
     colors.append((minSpeed + step*x, alpha+red+green+blue))
 
 def main():
@@ -83,10 +84,10 @@ def main():
     for point in gpsData:
       if point[0] == 3:
         if fromCoord is None:
-          fromCoord = (point[5],point[4],point[7])
+          fromCoord = (point[5],point[4],point[7]+30)
           toCoord = fromCoord
         else:
-          toCoord = (point[5],point[4],point[7])
+          toCoord = (point[5],point[4],point[7]+30)
         chosen = -1
         if point[11] != "nan":
           for color in colors:

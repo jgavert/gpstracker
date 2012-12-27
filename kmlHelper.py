@@ -43,8 +43,8 @@ kmlPlaceStyleIdIn = """        <styleUrl>#"""
 kmlPlaceStyleIdClose = """</styleUrl>
 """
 kmlPlaceLineStringIn = """        <LineString>
-          <extrude>1</extrude>
-          <tessellate>1</tessellate>
+          <extrude>0</extrude>
+          <tessellate>0</tessellate>
           <altitudeMode>absolute</altitudeMode>
 """
 kmlCoordIn = """          <coordinates>"""
