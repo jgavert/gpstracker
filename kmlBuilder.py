@@ -11,18 +11,18 @@ class KMLBuilder():
     this.tempfile.flush()
 
   def addLineStyle(this, styleID, color, width):
-    this.tempfile.write(kmlLineStyleIDIn + styleID + kmlLineStyleIDIn2)
-    this.tempfile.write(kmlColorIn + color + kmlColorClose)
-    this.tempfile.write(kmlWidthIn + width + kmlWidthClose + kmlLineStyleClose)
+    this.tempfile.write(kmlLineStyleIDIn + str(styleID) + kmlLineStyleIDIn2)
+    this.tempfile.write(kmlColorIn + str(color) + kmlColorClose)
+    this.tempfile.write(kmlWidthIn + str(width) + kmlWidthClose + kmlLineStyleClose)
     this.tempfile.flush()
 
   def addPlacemark(this, PlacemarkID, desc, styleID, fromCoord, toCoord):
-    this.tempfile.write(kmlPlaceIn + kmlPlaceNameIn + PlacemarkID + kmlPlaceNameClose)
-    this.tempfile.write(kmlPlaceDescIn + desc + kmlPlaceDescClose)
-    this.tempfile.write(kmlPlaceStyleIdIn + styleID + kmlPlaceStyleIdClose)
+    this.tempfile.write(kmlPlaceIn + kmlPlaceNameIn + str(PlacemarkID) + kmlPlaceNameClose)
+    this.tempfile.write(kmlPlaceDescIn + str(desc) + kmlPlaceDescClose)
+    this.tempfile.write(kmlPlaceStyleIdIn + str(styleID) + kmlPlaceStyleIdClose)
     this.tempfile.write(kmlPlaceLineStringIn + kmlCoordIn)
-    this.tempfile.write(fromCoord[0] + "," + fromCoord[1] + "," + fromCoord[2] + "\n")
-    this.tempfile.write(toCoord[0]   + "," + toCoord[1]   + "," + toCoord[2]   + "\n")
+    this.tempfile.write(str(fromCoord[0]) + "," + str(fromCoord[1]) + "," + str(fromCoord[2]) + "\n")
+    this.tempfile.write(str(toCoord[0])   + "," + str(toCoord[1])   + "," + str(toCoord[2])   + "\n")
     this.tempfile.write(kmlLineStringClose + kmlPlaceClose)
     this.tempfile.flush()
 
@@ -30,7 +30,7 @@ class KMLBuilder():
     this.tempfile.write(kmlFolderClose + kmlDocClose + kmlClose)
     this.tempfile.flush()
     this.tempfile.close()
-    shutil.copyfile(".tempfile", filename + ".kml")
+    shutil.copyfile(".tempfile", str(filename) + ".kml")
     os.remove(".tempfile")
 
 

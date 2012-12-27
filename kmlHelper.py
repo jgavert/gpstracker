@@ -16,7 +16,7 @@ kmlFolderIn = """    <Folder>
       <description></description>
 """
 
-kmlLineStyleIDIn = """      <Style id=" """
+kmlLineStyleIDIn = "      <Style id=\""
 kmlLineStyleIDIn2 = """">
         <LineStyle>
 """
@@ -39,7 +39,7 @@ kmlPlaceNameClose = """</name>
 kmlPlaceDescIn = """        <description>"""
 kmlPlaceDescClose = """</description>
 """
-kmlPlaceStyleIdIn = """        <styleUrl>"""
+kmlPlaceStyleIdIn = """        <styleUrl>#"""
 kmlPlaceStyleIdclose = """</styleUrl>
 """
 kmlPlaceLineStringIn = """        <LineString>
